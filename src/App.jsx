@@ -1,27 +1,54 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
+import Modal from './components/modal/Modal.jsx';
 
 import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 
 import './common.scss';
 
-class App extends Component {
-  state = {
-    weekStartDate: new Date(),
+const App = () => {
+  const [weekStartDate, changeStartDate] = useState(new Date());
+
+  const [modalFormVisible, tooggleModalFormVisible] = useState(false);
+
+  const setCurentWeek = () => {
+    changeStartDate(new Date());
   };
 
-  render() {
-    const { weekStartDate } = this.state;
-    const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+  const showModalForm = () => {
+    tooggleModalFormVisible(true);
+  };
+  const closeModalForm = () => {
+    tooggleModalFormVisible(false);
+  };
 
-    return (
-      <>
-        <Header />
-        <Calendar weekDates={weekDates} />
-      </>
-    );
-  }
-}
+  const getNextWeek = () => {
+    const copyDate = new Date(weekStartDate);
+    copyDate.setDate(copyDate.getDate() + 7);
+    changeStartDate(copyDate);
+  };
 
+  const getPrevWeek = () => {
+    const copyDate = new Date(weekStartDate);
+    copyDate.setDate(copyDate.getDate() - 7);
+    changeStartDate(copyDate);
+  };
+
+  const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+
+  return (
+    <>
+      <Header
+        weekDates={weekDates}
+        getNextWeek={getNextWeek}
+        getPrevWeek={getPrevWeek}
+        setCurentWeek={setCurentWeek}
+        showModalForm={showModalForm}
+      />
+      <Calendar weekDates={weekDates} />
+      {modalFormVisible ? <Modal closeModalForm={closeModalForm} /> : ''}
+    </>
+  );
+};
 export default App;

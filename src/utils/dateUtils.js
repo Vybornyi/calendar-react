@@ -1,3 +1,20 @@
+export const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+export const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 export const getWeekStartDate = (date) => {
   const dateCopy = new Date(date);
   const dayOfWeek = dateCopy.getDay();
@@ -19,6 +36,17 @@ export const generateWeekRange = (startDate) => {
   return result;
 };
 
+export const generateMonthRange = (weekDates) => {
+  const monthOfFirstDayWeek = weekDates[0].getMonth();
+  const monthOfLastDayWeek = weekDates[6].getMonth();
+  const curentYear = weekDates[6].getFullYear();
+  if (monthOfFirstDayWeek === monthOfLastDayWeek) {
+    return `${months[monthOfFirstDayWeek]} ${curentYear}`;
+  }
+  return `${months[monthOfFirstDayWeek].slice(0, 3)}. - ${months[monthOfLastDayWeek].slice(0, 3)}. ${curentYear}`;
+
+}
+
 export const getDateTime = (date, time) => {
   const [hours, minutes] = time.split(':');
   const withHours = new Date(new Date(date).setHours(Number(hours)));
@@ -30,18 +58,5 @@ export const formatMins = (mins) => {
   return mins < 10 ? `0${mins}` : mins;
 };
 
-export const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-export const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+
+

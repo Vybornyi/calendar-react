@@ -5,7 +5,7 @@ import './week.scss';
 
 const Week = ({ weekDates, events }) => {
   return (
-    <div className="calendar__week">
+    <div className='calendar__week'>
       {weekDates.map((dayStart) => {
         const dayEnd = new Date(dayStart.getTime()).setHours(
           dayStart.getHours() + 24
@@ -15,6 +15,7 @@ const Week = ({ weekDates, events }) => {
         const dayEvents = events.filter(
           (event) => event.dateFrom > dayStart && event.dateTo < dayEnd
         );
+        console.log(dayEvents);
 
         return (
           <Day

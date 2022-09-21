@@ -1,22 +1,40 @@
 import React from 'react';
-
+import { generateMonthRange } from '../../utils/dateUtils.js';
 import './header.scss';
 
-const Header = () => {
+const Header = ({
+  weekDates,
+  getNextWeek,
+  getPrevWeek,
+  setCurentWeek,
+  showModalForm,
+}) => {
+  const monthRange = generateMonthRange(weekDates);
   return (
-    <header className="header">
-      <button className="button create-event-btn">
-        <i className="fas fa-plus create-event-btn__icon"></i>Create
+    <header className='header'>
+      <button onClick={showModalForm} className='button create-event-btn'>
+        <i className='fas fa-plus create-event-btn__icon'></i>Create
       </button>
-      <div className="navigation">
-        <button className="navigation__today-btn button">Today</button>
-        <button className="icon-button navigation__nav-icon">
-          <i className="fas fa-chevron-left"></i>
+      <div className='navigation'>
+        <button
+          onClick={setCurentWeek}
+          className='navigation__today-btn button'
+        >
+          Today
         </button>
-        <button className="icon-button navigation__nav-icon">
-          <i className="fas fa-chevron-right"></i>
+        <button
+          onClick={getPrevWeek}
+          className='icon-button navigation__nav-icon'
+        >
+          <i className='fas fa-chevron-left'></i>
         </button>
-        <span className="navigation__displayed-month"></span>
+        <button
+          onClick={getNextWeek}
+          className='icon-button navigation__nav-icon'
+        >
+          <i className='fas fa-chevron-right'></i>
+        </button>
+        <span className='navigation__displayed-month'>{monthRange}</span>
       </div>
     </header>
   );
