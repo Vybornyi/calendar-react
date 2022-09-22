@@ -15,13 +15,28 @@
     margin-bottom: 8px;
   }
 
+  &__delete-btn {
+    display: none;
+  }
+
   &:hover {
     font-weight: bold;
     background-color: red;
-  }
-}
 
-.delete-event-btn {
-  cursor: pointer;
-  border: none;
+    .event__delete-btn {
+      display: block;
+      cursor: pointer;
+      border: none;
+      border-radius: 50%;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 15px;
+      height: 15px;
+      padding: 0;
+      margin: 0;
+      line-height: 10px;
+      transform: rotate(45deg);
+    }
+  }
 }

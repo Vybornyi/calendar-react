@@ -9,7 +9,7 @@ const Day = ({ dataDay, dayEvents }) => {
     .map((val, index) => index);
 
   return (
-    <div className="calendar__day" data-day={dataDay}>
+    <div className='calendar__day' data-day={dataDay}>
       {hours.map((hour) => {
         //getting all events from the day we will render
         const hourEvents = dayEvents.filter(

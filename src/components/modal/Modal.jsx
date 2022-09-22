@@ -1,55 +1,90 @@
-import React, { Component } from 'react';
-
+import React, { PureComponent, useState } from 'react';
+import events from '../../gateway/events';
+import { getDateTime } from '../../utils/dateUtils.js';
 import './modal.scss';
 
-class Modal extends Component {
-  render() {
-    return (
-      <div className='modal overlay'>
-        <div className='modal__content'>
-          <div className='create-event'>
-            <button
-              onClick={this.props.closeModalForm}
-              className='create-event__close-btn'
-            >
-              +
-            </button>
-            <form className='event-form'>
+const Modal = ({ closeModalForm }) => {
+  const [formInfo, setFormInfo] = useState({
+    title: '',
+    date: '',
+    startTime: '',
+    endTime: '',
+    description: '',
+  });
+  const { title, date, startTime, endTime, description } = formInfo;
+  const handleChange = e => {
+    const { value, name } = e.target;
+    setFormInfo({ ...formInfo, [name]: value });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const newEvent = {
+      id: Math.random(),
+      title,
+      description,
+      dateFrom: getDateTime(date, startTime),
+      dateTo: getDateTime(date, endTime),
+    };
+    events.push(newEvent);
+    closeModalForm();
+  };
+
+  return (
+    <div className="modal overlay">
+      <div className="modal__content">
+        <div className="create-event">
+          <button onClick={closeModalForm} className="create-event__close-btn">
+            +
+          </button>
+          <form onSubmit={handleSubmit} className="event-form">
+            <input
+              onChange={handleChange}
+              value={title}
+              type="text"
+              name="title"
+              placeholder="Title"
+              className="event-form__field"
+            />
+            <div className="event-form__time">
               <input
-                type='text'
-                name='title'
-                placeholder='Title'
-                className='event-form__field'
+                onChange={handleChange}
+                value={date}
+                type="date"
+                name="date"
+                className="event-form__field"
               />
-              <div className='event-form__time'>
-                <input type='date' name='date' className='event-form__field' />
-                <input
-                  type='time'
-                  name='startTime'
-                  className='event-form__field'
-                  onChange={this.handleChange}
-                />
-                <span>-</span>
-                <input
-                  type='time'
-                  name='endTime'
-                  className='event-form__field'
-                />
-              </div>
-              <textarea
-                name='description'
-                placeholder='Description'
-                className='event-form__field'
-              ></textarea>
-              <button type='submit' className='event-form__submit-btn'>
-                Create
-              </button>
-            </form>
-          </div>
+              <input
+                onChange={handleChange}
+                value={startTime}
+                type="time"
+                name="startTime"
+                className="event-form__field"
+              />
+              <span>-</span>
+              <input
+                onChange={handleChange}
+                value={endTime}
+                type="time"
+                name="endTime"
+                className="event-form__field"
+              />
+            </div>
+            <textarea
+              onChange={handleChange}
+              value={description}
+              name="description"
+              placeholder="Description"
+              className="event-form__field"
+            ></textarea>
+            <button type="submit" className="event-form__submit-btn">
+              Create
+            </button>
+          </form>
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Modal;

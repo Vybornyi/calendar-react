@@ -15,7 +15,6 @@ const Week = ({ weekDates, events }) => {
         const dayEvents = events.filter(
           (event) => event.dateFrom > dayStart && event.dateTo < dayEnd
         );
-        console.log(dayEvents);
 
         return (
           <Day
