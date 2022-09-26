@@ -7,5 +7,21 @@
     height: 59px;
     position: relative;
     border-bottom: 1px solid #eee;
+    &__line {
+      position: relative;
+      margin: 0px;
+      height: 2px;
+      background-color: #ff0000;
+      border: none;
+    }
+    &__dot {
+      position: relative;
+      margin: 0;
+      left: -4px;
+      width: 8px;
+      height: 8px;
+      background-color: #ff0000;
+      border-radius: 50%;
+    }
   }
 }

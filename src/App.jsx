@@ -16,13 +16,6 @@ const App = () => {
     changeStartDate(new Date());
   };
 
-  const showModalForm = () => {
-    tooggleModalFormVisible(true);
-  };
-  const closeModalForm = () => {
-    tooggleModalFormVisible(false);
-  };
-
   const getNextWeek = () => {
     const copyDate = new Date(weekStartDate);
     copyDate.setDate(copyDate.getDate() + 7);
@@ -33,6 +26,14 @@ const App = () => {
     const copyDate = new Date(weekStartDate);
     copyDate.setDate(copyDate.getDate() - 7);
     changeStartDate(copyDate);
+  };
+
+  const showModalForm = () => {
+    tooggleModalFormVisible(true);
+  };
+
+  const closeModalForm = () => {
+    tooggleModalFormVisible(false);
   };
 
   const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
