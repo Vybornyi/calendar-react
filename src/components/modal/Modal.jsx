@@ -1,9 +1,9 @@
-import React, { PureComponent, useState } from 'react';
-import events from '../../gateway/events';
+import React, { useState } from 'react';
+import { createEvent } from '../../gateway/events';
 import { getDateTime } from '../../utils/dateUtils.js';
 import './modal.scss';
 
-const Modal = ({ closeModalForm }) => {
+const Modal = ({ closeModalForm, fetchEvents }) => {
   const [formInfo, setFormInfo] = useState({
     title: '',
     date: '',
@@ -26,7 +26,9 @@ const Modal = ({ closeModalForm }) => {
       dateFrom: getDateTime(date, startTime),
       dateTo: getDateTime(date, endTime),
     };
-    events.push(newEvent);
+    createEvent(newEvent).then(() => {
+      fetchEvents();
+    });
     closeModalForm();
   };
 

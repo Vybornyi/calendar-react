@@ -1,14 +1,16 @@
 import React from 'react';
-import events from '../../gateway/events.js';
+import { deleteTask } from '../../gateway/events';
 import './event.scss';
 
-const Event = ({ id, height, marginTop, title, time }) => {
+const Event = ({ id, height, marginTop, title, time, fetchEvents }) => {
   const eventStyle = {
     height,
     marginTop,
   };
   const handleDelete = () => {
-    console.log(events);
+    deleteTask(id).then(() => {
+      fetchEvents();
+    });
   };
 
   return (

@@ -3,9 +3,9 @@ import Event from '../event/Event';
 import { formatMins } from '../../../src/utils/dateUtils.js';
 import './hour.scss';
 
-const Hour = ({ curentDate, dataDay, dataHour, hourEvents }) => {
+const Hour = ({ curentDate, dataDay, dataHour, hourEvents, fetchEvents }) => {
   const { curentDay, curentHour, curentTime } = curentDate;
-  const redLineVisiable = dataDay === curentDay && curentHour === dataHour ? true : false;
+  const redLineVisiable = dataDay === curentDay && curentHour === dataHour;
   const styleLine = {
     top: curentTime,
   };
@@ -23,25 +23,30 @@ const Hour = ({ curentDate, dataDay, dataHour, hourEvents }) => {
       ) : (
         ''
       )}
-      {/* if no events in the current hour nothing will render here */}
-      {hourEvents.map(({ id, dateFrom, dateTo, title }) => {
-        const eventStart = `${dateFrom.getHours()}:${formatMins(dateFrom.getMinutes())}`;
-        const eventEnd = `${dateTo.getHours()}:${formatMins(dateTo.getMinutes())}`;
+      {!hourEvents
+        ? null
+        : hourEvents.map(({ id, dateFrom, dateTo, title }) => {
+            const eventStart = `${new Date(dateFrom).getHours()}:${formatMins(
+              new Date(dateFrom).getMinutes(),
+            )}`;
+            const eventEnd = `${new Date(dateTo).getHours()}:${formatMins(
+              new Date(dateTo).getMinutes(),
+            )}`;
 
-        return (
-          <Event
-            id={id}
-            key={id}
-            //calculating event height = duration of event in minutes
-            height={(dateTo.getTime() - dateFrom.getTime()) / (1000 * 60)}
-            marginTop={dateFrom.getMinutes()}
-            time={`${eventStart} - ${eventEnd}`}
-            title={title}
-          />
-        );
-      })}
+            return (
+              <Event
+                id={id}
+                key={id}
+                //calculating event height = duration of event in minutes
+                height={(new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / (1000 * 60)}
+                marginTop={new Date(dateFrom).getMinutes()}
+                time={`${eventStart} - ${eventEnd}`}
+                title={title}
+                fetchEvents={fetchEvents}
+              />
+            );
+          })}
     </div>
   );
 };
-
 export default Hour;
