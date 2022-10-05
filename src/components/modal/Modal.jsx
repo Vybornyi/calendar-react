@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { createEvent } from '../../gateway/events';
 import { getDateTime } from '../../utils/dateUtils.js';
 import './modal.scss';
+import PropTypes from 'prop-types';
 
 const Modal = ({ closeModalForm, fetchEvents }) => {
   const [formInfo, setFormInfo] = useState({
@@ -88,5 +89,8 @@ const Modal = ({ closeModalForm, fetchEvents }) => {
     </div>
   );
 };
-
+Modal.propTypes = {
+  closeModalForm: PropTypes.func.isRequired,
+  fetchEvents: PropTypes.func.isRequired,
+};
 export default Modal;

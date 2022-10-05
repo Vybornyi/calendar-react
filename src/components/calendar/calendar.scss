@@ -48,6 +48,7 @@
 }
 
 .day-label {
+  position: relative;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -58,10 +59,20 @@
   &__day-name {
     font-size: 14px;
     text-transform: uppercase;
+    z-index: 1;
   }
 
   &__day-number {
     font-size: 22px;
+    z-index: 1;
+  }
+  &__current-date {
+    background-color: #2d319da8;
+    position: absolute;
+    height: 100%;
+    width: 27%;
+    border-radius: 50%;
+    z-index: 0;
   }
 }
 

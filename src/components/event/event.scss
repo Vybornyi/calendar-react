@@ -22,6 +22,9 @@
   &:hover {
     font-weight: bold;
     background-color: red;
+    .event__title {
+      white-space: normal;
+    }
 
     .event__delete-btn {
       display: block;

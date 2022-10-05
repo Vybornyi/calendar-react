@@ -1,6 +1,7 @@
 import React from 'react';
 import { generateMonthRange } from '../../utils/dateUtils.js';
 import './header.scss';
+import PropTypes from 'prop-types';
 
 const Header = ({ weekDates, getNextWeek, getPrevWeek, setCurentWeek, showModalForm }) => {
   const monthRange = generateMonthRange(weekDates);
@@ -23,6 +24,14 @@ const Header = ({ weekDates, getNextWeek, getPrevWeek, setCurentWeek, showModalF
       </div>
     </header>
   );
+};
+
+Header.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  getNextWeek: PropTypes.func.isRequired,
+  getPrevWeek: PropTypes.func.isRequired,
+  setCurentWeek: PropTypes.func.isRequired,
+  showModalForm: PropTypes.func.isRequired,
 };
 
 export default Header;

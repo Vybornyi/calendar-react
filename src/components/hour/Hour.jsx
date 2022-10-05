@@ -1,28 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Event from '../event/Event';
+import RedLine from '../redLine/RedLine';
 import { formatMins } from '../../../src/utils/dateUtils.js';
 import './hour.scss';
+import PropTypes from 'prop-types';
 
 const Hour = ({ curentDate, dataDay, dataHour, hourEvents, fetchEvents }) => {
   const { curentDay, curentHour, curentTime } = curentDate;
   const redLineVisiable = dataDay === curentDay && curentHour === dataHour;
-  const styleLine = {
-    top: curentTime,
-  };
-  const styleDot = {
-    top: curentTime - 4,
-  };
 
   return (
     <div className="calendar__time-slot" data-time={dataHour + 1}>
-      {redLineVisiable ? (
-        <>
-          <hr style={styleLine} className="calendar__time-slot__line" />
-          <div style={styleDot} className="calendar__time-slot__dot"></div>
-        </>
-      ) : (
-        ''
-      )}
+      {redLineVisiable ? <RedLine curentTime={curentTime} /> : ''}
       {!hourEvents
         ? null
         : hourEvents.map(({ id, dateFrom, dateTo, title }) => {
@@ -49,4 +38,13 @@ const Hour = ({ curentDate, dataDay, dataHour, hourEvents, fetchEvents }) => {
     </div>
   );
 };
+
+Hour.propTypes = {
+  curentDate: PropTypes.object.isRequired,
+  dataDay: PropTypes.number.isRequired,
+  dataHour: PropTypes.number.isRequired,
+  hourEvents: PropTypes.array.isRequired,
+  fetchEvents: PropTypes.func.isRequired,
+};
+
 export default Hour;

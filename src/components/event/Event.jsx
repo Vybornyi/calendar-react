@@ -1,6 +1,7 @@
 import React from 'react';
 import { deleteTask } from '../../gateway/events';
 import './event.scss';
+import PropTypes from 'prop-types';
 
 const Event = ({ id, height, marginTop, title, time, fetchEvents }) => {
   const eventStyle = {
@@ -23,5 +24,12 @@ const Event = ({ id, height, marginTop, title, time, fetchEvents }) => {
     </div>
   );
 };
-
+Event.propTypes = {
+  id: PropTypes.string.isRequired,
+  height: PropTypes.number,
+  marginTop: PropTypes.number,
+  title: PropTypes.string.isRequired,
+  time: PropTypes.string.isRequired,
+  fetchEvents: PropTypes.func.isRequired,
+};
 export default Event;
