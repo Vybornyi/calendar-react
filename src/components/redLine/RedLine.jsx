@@ -10,9 +10,12 @@ const RedLine = ({ curentTime }) => {
     top: marginTop - 4,
   };
   useEffect(() => {
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       updateMargin(new Date().getMinutes());
     }, 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
 
   return (

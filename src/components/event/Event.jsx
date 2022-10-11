@@ -1,5 +1,5 @@
 import React from 'react';
-import { deleteTask } from '../../gateway/events';
+import { deleteTask } from '../../gateway/gateway.js';
 import './event.scss';
 import PropTypes from 'prop-types';
 

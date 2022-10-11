@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createEvent } from '../../gateway/events';
+import { createEvent } from '../../gateway/gateway.js';
 import { getDateTime } from '../../utils/dateUtils.js';
 import './modal.scss';
 import PropTypes from 'prop-types';

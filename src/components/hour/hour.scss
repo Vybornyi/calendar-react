@@ -13,6 +13,7 @@
       height: 2px;
       background-color: #ff0000;
       border: none;
+      z-index: 1;
     }
     &__dot {
       position: relative;
@@ -22,6 +23,7 @@
       height: 8px;
       background-color: #ff0000;
       border-radius: 50%;
+      z-index: 1;
     }
   }
 }
