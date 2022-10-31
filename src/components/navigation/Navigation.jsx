@@ -11,13 +11,16 @@ const Navigation = ({ weekDates, curentDate }) => {
       {weekDates.map(dayDate => {
         return (
           <div key={dayDate.getDay()} className="calendar__day-label day-label">
-            {formatDate(dayDate) === curentDate ? (
-              <div className="day-label__current-date"></div>
-            ) : (
-              ''
-            )}
             <span className="day-label__day-name">{days[dayDate.getDay()]}</span>
-            <span className="day-label__day-number">{dayDate.getDate()}</span>
+            <span
+              className={
+                formatDate(dayDate) === curentDate
+                  ? 'day-label__day-number day-label__day-number__current-date'
+                  : 'day-label__day-number'
+              }
+            >
+              {dayDate.getDate()}
+            </span>
           </div>
         );
       })}

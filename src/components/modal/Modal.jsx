@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import { createEvent } from '../../gateway/gateway.js';
-import { getDateTime } from '../../utils/dateUtils.js';
+import { getDateTime, checkEventTime } from '../../utils/dateUtils.js';
 import './modal.scss';
+
 import PropTypes from 'prop-types';
 
 const Modal = ({ closeModalForm, fetchEvents }) => {
@@ -22,14 +24,18 @@ const Modal = ({ closeModalForm, fetchEvents }) => {
     e.preventDefault();
     const newEvent = {
       id: Math.random(),
-      title,
+      title: title === '' ? 'No title' : title,
       description,
       dateFrom: getDateTime(date, startTime),
       dateTo: getDateTime(date, endTime),
     };
+    console.log(moment(new Date()).format());
+    checkEventTime(newEvent.dateFrom, newEvent.dateTo);
+
     createEvent(newEvent).then(() => {
       fetchEvents();
     });
+
     closeModalForm();
   };
 
@@ -56,6 +62,7 @@ const Modal = ({ closeModalForm, fetchEvents }) => {
                 type="date"
                 name="date"
                 className="event-form__field"
+                required
               />
               <input
                 onChange={handleChange}
@@ -63,6 +70,7 @@ const Modal = ({ closeModalForm, fetchEvents }) => {
                 type="time"
                 name="startTime"
                 className="event-form__field"
+                required
               />
               <span>-</span>
               <input
@@ -71,6 +79,7 @@ const Modal = ({ closeModalForm, fetchEvents }) => {
                 type="time"
                 name="endTime"
                 className="event-form__field"
+                required
               />
             </div>
             <textarea

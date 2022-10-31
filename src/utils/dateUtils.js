@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const months = [
   'January',
   'February',
@@ -57,6 +59,15 @@ export const getDateTime = (date, time) => {
 export const formatMins = (mins) => {
   return mins < 10 ? `0${mins}` : mins;
 };
+
+export const checkEventTime = (dateFrom, dateTo) => {
+  const startEvent = moment(dateFrom);
+  const endEvent = moment(dateTo);
+  const curentTime = moment(new Date());
+  if (endEvent.diff(startEvent, 'minutes') > 359) {
+    alert("The task period can't be longer than 6 hours");
+  }
+}
 
 
 
