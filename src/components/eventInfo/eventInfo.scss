@@ -1,0 +1,47 @@
+.event-info {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    position: relative;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+  }
+
+  &__close-btn {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    transform: rotate(45deg) scale(2);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+  }
+  &__title {
+    margin-bottom: 8px;
+  }
+  &__time {
+    margin-bottom: 8px;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #cccccc45;
+  z-index: 10;
+}

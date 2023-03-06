@@ -1,37 +1,47 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { generateMonthRange } from '../../utils/dateUtils.js';
 import './header.scss';
-import PropTypes from 'prop-types';
+import {
+  setCurentWeekRange,
+  setNextWeekRange,
+  setPrevWeekRange,
+  showModalForm,
+} from '../../redux/calendarSlice.js';
 
-const Header = ({ weekDates, getNextWeek, getPrevWeek, setCurentWeek, showModalForm }) => {
+const Header = () => {
+  const weekDates = useSelector(state => state.calendar.weekRangeArray);
   const monthRange = generateMonthRange(weekDates);
+  const dispatch = useDispatch();
+
   return (
     <header className="header">
-      <button onClick={showModalForm} className="button create-event-btn">
+      <button onClick={() => dispatch(showModalForm())} className="button create-event-btn">
         <i className="fas fa-plus create-event-btn__icon"></i>Create
       </button>
       <div className="navigation">
-        <button onClick={setCurentWeek} className="navigation__today-btn button">
+        <button
+          onClick={() => dispatch(setCurentWeekRange())}
+          className="navigation__today-btn button"
+        >
           Today
         </button>
-        <button onClick={getPrevWeek} className="icon-button navigation__nav-icon">
+        <button
+          onClick={() => dispatch(setPrevWeekRange())}
+          className="icon-button navigation__nav-icon"
+        >
           <i className="fas fa-chevron-left"></i>
         </button>
-        <button onClick={getNextWeek} className="icon-button navigation__nav-icon">
+        <button
+          onClick={() => dispatch(setNextWeekRange())}
+          className="icon-button navigation__nav-icon"
+        >
           <i className="fas fa-chevron-right"></i>
         </button>
         <span className="navigation__displayed-month">{monthRange}</span>
       </div>
     </header>
   );
-};
-
-Header.propTypes = {
-  weekDates: PropTypes.array.isRequired,
-  getNextWeek: PropTypes.func.isRequired,
-  getPrevWeek: PropTypes.func.isRequired,
-  setCurentWeek: PropTypes.func.isRequired,
-  showModalForm: PropTypes.func.isRequired,
 };
 
 export default Header;

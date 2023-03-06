@@ -1,17 +1,21 @@
 import React from 'react';
 import { days } from '../../utils/dateUtils.js';
 import moment from 'moment/moment.js';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 const formatDate = date => moment(date).format('MMMM Do YYYY');
 
-const Navigation = ({ weekDates, curentDate }) => {
+const Navigation = () => {
+  const curentDate = formatDate(moment());
+  const weekDates = useSelector(state => state.calendar.weekRangeArray);
+
   return (
     <header className="calendar__header">
       {weekDates.map(dayDate => {
+        const dayNumber = moment(dayDate).day();
         return (
-          <div key={dayDate.getDay()} className="calendar__day-label day-label">
-            <span className="day-label__day-name">{days[dayDate.getDay()]}</span>
+          <div key={dayDate} className="calendar__day-label day-label">
+            <span className="day-label__day-name">{days[dayNumber]}</span>
             <span
               className={
                 formatDate(dayDate) === curentDate
@@ -19,7 +23,7 @@ const Navigation = ({ weekDates, curentDate }) => {
                   : 'day-label__day-number'
               }
             >
-              {dayDate.getDate()}
+              {moment(dayDate).date()}
             </span>
           </div>
         );
@@ -27,8 +31,5 @@ const Navigation = ({ weekDates, curentDate }) => {
     </header>
   );
 };
-Navigation.propTypes = {
-  weekDates: PropTypes.array.isRequired,
-  curentDate: PropTypes.string.isRequired,
-};
+
 export default Navigation;

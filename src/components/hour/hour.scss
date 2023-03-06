@@ -1,29 +1,24 @@
-.calendar {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 60px);
+.calendar__time-slot {
+  height: 59px;
+  position: relative;
+  border-bottom: 1px solid #eee;
 
-  &__time-slot {
-    height: 59px;
+  &__line {
     position: relative;
-    border-bottom: 1px solid #eee;
-    &__line {
-      position: relative;
-      margin: 0px;
-      height: 2px;
-      background-color: #ff0000;
-      border: none;
-      z-index: 2;
-    }
-    &__dot {
-      position: relative;
-      margin: 0;
-      left: -4px;
-      width: 8px;
-      height: 8px;
-      background-color: #ff0000;
-      border-radius: 50%;
-      z-index: 2;
-    }
+    margin: 0px;
+    height: 2px;
+    background-color: #ff0000;
+    border: none;
+    z-index: 2;
+  }
+  &__dot {
+    position: relative;
+    margin: 0;
+    left: -4px;
+    width: 8px;
+    height: 8px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    z-index: 2;
   }
 }

@@ -1,36 +1,45 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { showModalForm } from '../../redux/calendarSlice';
 import Event from '../event/Event';
 import RedLine from '../redLine/RedLine';
-import { formatMins } from '../../../src/utils/dateUtils.js';
+import { getHeightEvent } from '../../../src/utils/dateUtils.js';
 import './hour.scss';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
-const Hour = ({ curentDate, dataDay, dataHour, hourEvents, fetchEvents }) => {
-  const { curentDay, curentHour, curentTime } = curentDate;
-  const redLineVisiable = dataDay === curentDay && curentHour === dataHour;
+const Hour = ({ dataDay, dataHour, hourEvents }) => {
+  const dispatch = useDispatch();
+  const curentDay = moment().format('YYYY-MM-DD');
+  const { minutes, hours } = moment().toObject();
+  const redLineVisiable = curentDay === dataDay && hours == dataHour;
 
   return (
-    <div className="calendar__time-slot" data-time={dataHour + 1}>
-      {redLineVisiable ? <RedLine curentTime={curentTime} /> : ''}
+    <div
+      onClick={e => {
+        if (!e.target.dataset.time) {
+          return;
+        }
+        dispatch(showModalForm({ dataHour, dataDay }));
+      }}
+      className="calendar__time-slot"
+      data-time={dataHour}
+    >
+      {redLineVisiable ? <RedLine curentTime={minutes} /> : ''}
       {!hourEvents
         ? null
-        : hourEvents.map(({ id, dateFrom, dateTo, title }) => {
-            const eventStart = `${new Date(dateFrom).getHours()}:${formatMins(
-              new Date(dateFrom).getMinutes(),
-            )}`;
-            const eventEnd = `${new Date(dateTo).getHours()}:${formatMins(
-              new Date(dateTo).getMinutes(),
-            )}`;
+        : hourEvents.map(({ id, eventStart, eventEnd, title, description }) => {
+            const height = getHeightEvent(eventStart, eventEnd);
 
             return (
               <Event
                 id={id}
                 key={id}
-                height={(new Date(dateTo).getTime() - new Date(dateFrom).getTime()) / (1000 * 60)}
-                marginTop={new Date(dateFrom).getMinutes()}
+                height={height}
+                marginTop={+moment(eventStart, 'HH:mm').format('mm')}
                 time={`${eventStart} - ${eventEnd}`}
                 title={title}
-                fetchEvents={fetchEvents}
+                description={description}
               />
             );
           })}
@@ -39,11 +48,8 @@ const Hour = ({ curentDate, dataDay, dataHour, hourEvents, fetchEvents }) => {
 };
 
 Hour.propTypes = {
-  curentDate: PropTypes.object.isRequired,
-  dataDay: PropTypes.number.isRequired,
-  dataHour: PropTypes.number.isRequired,
+  dataDay: PropTypes.string.isRequired,
   hourEvents: PropTypes.array.isRequired,
-  fetchEvents: PropTypes.func.isRequired,
 };
 
 export default Hour;

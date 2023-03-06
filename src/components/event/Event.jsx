@@ -1,27 +1,43 @@
 import React from 'react';
-import { deleteTask } from '../../gateway/gateway.js';
+import { useDispatch } from 'react-redux';
 import './event.scss';
 import PropTypes from 'prop-types';
+import { deleteEvent, showEventInfo } from '../../redux/eventsSlice.js';
 
-const Event = ({ id, height, marginTop, title, time, fetchEvents }) => {
+const Event = ({ id, height, marginTop, title, time }) => {
+  const dispatch = useDispatch();
   const eventStyle = {
     height,
     marginTop,
   };
   const handleDelete = () => {
-    deleteTask(id).then(() => {
-      fetchEvents();
-    });
+    dispatch(deleteEvent(id));
   };
 
   return (
-    <div style={eventStyle} className="event">
-      <div className="event__title">{title}</div>
-      <div className="event__time">{time}</div>
-      <button onClick={handleDelete} className="event__delete-btn">
-        +
-      </button>
-    </div>
+    <>
+      <div
+        onClick={e => {
+          if (e.target.getAttribute('datatype') === 'event') {
+            console.log(e.target.getAttribute('datatype'));
+            dispatch(showEventInfo(id));
+          }
+        }}
+        style={eventStyle}
+        className="event"
+        datatype="event"
+      >
+        <div className="event__title" datatype="event">
+          {title}
+        </div>
+        <div className="event__time" datatype="event">
+          {time}
+        </div>
+        <button onClick={handleDelete} className="event__delete-btn">
+          +
+        </button>
+      </div>
+    </>
   );
 };
 Event.propTypes = {
@@ -30,6 +46,5 @@ Event.propTypes = {
   marginTop: PropTypes.number,
   title: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
-  fetchEvents: PropTypes.func.isRequired,
 };
 export default Event;

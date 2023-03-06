@@ -12,6 +12,7 @@ The tech stack is:
     Webpack
     JavaScript ES 6
     React 18
+    Redux Toolkit
     REST API
 
 Available Scripts

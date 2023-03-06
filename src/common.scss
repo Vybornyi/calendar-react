@@ -7,6 +7,12 @@
   cursor: pointer;
   font-size: 19px;
   font-weight: 500;
+  background-color: #eeeeee38;
+  &:hover {
+    cursor: pointer;
+    background-color: #6495ed;
+    color: #f8f8f8;
+  }
 }
 
 .icon-button {
@@ -52,4 +58,13 @@
 
 .hidden {
   display: none;
+}
+h1,
+h2,
+h4,
+h4 {
+  margin: 4px;
+}
+p {
+  margin: 0;
 }

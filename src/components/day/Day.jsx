@@ -1,38 +1,29 @@
 import React from 'react';
 import Hour from '../hour/Hour';
-import './day.scss';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
-const Day = ({ dataDay, dayEvents, curentDate, fetchEvents }) => {
-  const hours = Array(24)
-    .fill()
-    .map((val, index) => index);
+const Day = ({ dataDay, dayEvents }) => {
+  const hours = Array.from({ length: 24 }, (value, index) => {
+    return index.toString().padStart(2, '0');
+  });
+
   return (
     <div className="calendar__day" data-day={dataDay}>
       {hours.map(hour => {
-        //getting all events from the day we will render
         const hourEvents = dayEvents
-          ? dayEvents.filter(event => new Date(event.dateFrom).getHours() === hour)
+          ? dayEvents.filter(event => moment(event.eventStart, 'HH:mm').format('HH') === hour)
           : null;
-
         return (
-          <Hour
-            curentDate={curentDate}
-            key={dataDay + hour}
-            dataDay={dataDay}
-            dataHour={hour}
-            hourEvents={hourEvents}
-            fetchEvents={fetchEvents}
-          />
+          <Hour key={dataDay + hour} dataDay={dataDay} dataHour={hour} hourEvents={hourEvents} />
         );
       })}
     </div>
   );
 };
 Day.propTypes = {
-  dataDay: PropTypes.number.isRequired,
+  dataDay: PropTypes.string.isRequired,
   dayEvents: PropTypes.array.isRequired,
-  curentDate: PropTypes.object.isRequired,
-  fetchEvents: PropTypes.func.isRequired,
 };
+
 export default Day;

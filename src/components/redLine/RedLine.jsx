@@ -10,6 +10,11 @@ const RedLine = ({ curentTime }) => {
     top: marginTop - 4,
   };
   useEffect(() => {
+    const redLine = document.getElementById('redLine');
+    redLine.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+    });
     const intervalId = setInterval(() => {
       updateMargin(new Date().getMinutes());
     }, 1000);
@@ -20,7 +25,7 @@ const RedLine = ({ curentTime }) => {
 
   return (
     <>
-      <hr style={styleLine} className="calendar__time-slot__line" />
+      <hr id="redLine" style={styleLine} className="calendar__time-slot__line" />
       <div style={styleDot} className="calendar__time-slot__dot"></div>
     </>
   );

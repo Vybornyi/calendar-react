@@ -1,14 +1,14 @@
-const baseUrl = 'https://62e0303a98dd9c9df60f6e25.mockapi.io/events/';
+const baseUrl = 'https://64020738ab6b7399d0b22b58.mockapi.io/events/';
 
 export const fetchEventsList = () =>
   fetch(baseUrl).then(response => {
     if (!response.ok) {
-      alert('Internal Server Error. Can\'t display events');
+      throw new Error('Internal Server Error. Can\'t download events');
     }
     return response.json();
   });
 
-export const createEvent = event =>
+export const postEvent = event =>
   fetch(baseUrl, {
     method: 'POST',
     headers: {
@@ -17,7 +17,7 @@ export const createEvent = event =>
     body: JSON.stringify(event),
   }).then(response => {
     if (!response.ok) {
-      alert('Internal Server Error. Can\'t display events');
+      throw new Error('Internal Server Error. Can\'t save event');
     }
   });
 
@@ -26,6 +26,6 @@ export const deleteTask = taskId =>
     method: 'DELETE',
   }).then(response => {
     if (!response.ok) {
-      alert('Internal Server Error. Can\'t display events');
+      throw new Error('Internal Server Error. Can\'t delete event');
     }
   });

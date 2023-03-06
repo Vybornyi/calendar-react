@@ -1,18 +1,25 @@
 .event {
   position: absolute;
-  width: 80%;
+  width: 90%;
   background-color: cornflowerblue;
   z-index: 1;
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: 4px;
   color: #fff;
+  padding: 2px;
+  padding-left: 8px;
 
   &__title {
     width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
+    font-size: 12px;
+  }
+
+  &__time {
+    font-size: 12px;
+    overflow: hidden;
   }
 
   &__delete-btn {
@@ -20,8 +27,13 @@
   }
 
   &:hover {
-    font-weight: bold;
-    background-color: red;
+    .event {
+      position: absolute;
+    }
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0px 3px 15px -1px rgba(0, 0, 0, 0.73);
+
     .event__title {
       white-space: normal;
     }

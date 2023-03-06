@@ -1,20 +1,29 @@
 import React, { useState } from 'react';
-import moment from 'moment';
-import { createEvent } from '../../gateway/gateway.js';
-import { getDateTime, checkEventTime } from '../../utils/dateUtils.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { createEvent } from '../../redux/eventsSlice';
+import { showNotification } from '../../redux/notificationSlice.js';
+import { closeModalForm } from '../../redux/calendarSlice.js';
+import { validateNewEvent } from '../../utils/dateUtils.js';
 import './modal.scss';
+import moment from 'moment';
 
-import PropTypes from 'prop-types';
+const Modal = () => {
+  const dispatch = useDispatch();
+  const chosenStartTime = useSelector(state => state.calendar.chosenStartTime);
+  const chosenEndTime = useSelector(state => state.calendar.chosenEndTime);
+  const chosenDate = useSelector(state => state.calendar.chosenDate);
+  const events = useSelector(state => state.events.eventsList);
 
-const Modal = ({ closeModalForm, fetchEvents }) => {
   const [formInfo, setFormInfo] = useState({
     title: '',
-    date: '',
-    startTime: '',
-    endTime: '',
+    date: chosenDate,
+    eventStart: chosenStartTime,
+    eventEnd: chosenEndTime,
     description: '',
   });
-  const { title, date, startTime, endTime, description } = formInfo;
+
+  const { title, date, eventStart, eventEnd, description } = formInfo;
+
   const handleChange = e => {
     const { value, name } = e.target;
     setFormInfo({ ...formInfo, [name]: value });
@@ -22,28 +31,29 @@ const Modal = ({ closeModalForm, fetchEvents }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
+    const response = validateNewEvent(eventStart, eventEnd, date, events);
+    if (response.type !== 'success') {
+      dispatch(showNotification(response));
+      return;
+    }
+
     const newEvent = {
-      id: Math.random(),
       title: title === '' ? 'No title' : title,
       description,
-      dateFrom: getDateTime(date, startTime),
-      dateTo: getDateTime(date, endTime),
+      eventStart,
+      eventEnd:
+        eventStart === eventEnd ? moment(eventEnd, 'HH:mm').add(15, 'm').format('HH:mm') : eventEnd,
+      date,
     };
-    console.log(moment(new Date()).format());
-    checkEventTime(newEvent.dateFrom, newEvent.dateTo);
-
-    createEvent(newEvent).then(() => {
-      fetchEvents();
-    });
-
-    closeModalForm();
+    dispatch(createEvent(newEvent));
+    dispatch(closeModalForm());
   };
 
   return (
     <div className="modal overlay">
       <div className="modal__content">
         <div className="create-event">
-          <button onClick={closeModalForm} className="create-event__close-btn">
+          <button onClick={() => dispatch(closeModalForm())} className="create-event__close-btn">
             +
           </button>
           <form onSubmit={handleSubmit} className="event-form">
@@ -54,6 +64,7 @@ const Modal = ({ closeModalForm, fetchEvents }) => {
               name="title"
               placeholder="Title"
               className="event-form__field"
+              required
             />
             <div className="event-form__time">
               <input
@@ -66,18 +77,18 @@ const Modal = ({ closeModalForm, fetchEvents }) => {
               />
               <input
                 onChange={handleChange}
-                value={startTime}
+                value={eventStart}
                 type="time"
-                name="startTime"
+                name="eventStart"
                 className="event-form__field"
                 required
               />
               <span>-</span>
               <input
                 onChange={handleChange}
-                value={endTime}
+                value={eventEnd}
                 type="time"
-                name="endTime"
+                name="eventEnd"
                 className="event-form__field"
                 required
               />
@@ -98,8 +109,5 @@ const Modal = ({ closeModalForm, fetchEvents }) => {
     </div>
   );
 };
-Modal.propTypes = {
-  closeModalForm: PropTypes.func.isRequired,
-  fetchEvents: PropTypes.func.isRequired,
-};
+
 export default Modal;

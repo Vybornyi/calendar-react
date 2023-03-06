@@ -26,9 +26,9 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
-    "prettier": "^2.4.1",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.4",
+    "prettier": "^2.4.1",
     "sass": "^1.43.4",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
@@ -37,11 +37,16 @@
     "webpack-dev-server": "^4.4.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.12",
+    "@reduxjs/toolkit": "^1.9.3",
     "classnames": "^2.3.1",
     "core-js": "^3.19.1",
     "moment": "^2.29.4",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-redux": "^8.0.5"
   }
 }
