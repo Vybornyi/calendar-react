@@ -3,10 +3,9 @@ import { generateWeekRange } from "../utils/dateUtils";
 import moment from "moment";
 
 const initialState = {
-  chosenStartTime: null,
-  chosenEndTime: null,
-  chosenDate: null,
-  date: moment().format(),
+  eventStartTime: null,
+  eventEndTime: null,
+  eventStartDate: null,
   weekRangeArray: [],
   modalFormVisibility: false,
 }
@@ -16,7 +15,7 @@ const calendarSlice = createSlice({
   initialState,
   reducers: {
     setCurentWeekRange(state) {
-      state.weekRangeArray = generateWeekRange(state.date)
+      state.weekRangeArray = generateWeekRange(moment().format())
     },
     setNextWeekRange(state) {
       const nextMondayDate = moment(state.weekRangeArray[0]).add(7, 'd');
@@ -31,14 +30,14 @@ const calendarSlice = createSlice({
     showModalForm(state, action) {
       if (action.payload) {
         const { dataHour, dataDay } = action.payload;
-        state.chosenStartTime = `${dataHour}:00`;
-        state.chosenEndTime = moment(`${dataHour}:00`, 'HH:mm').add(15, 'minute').format('HH:mm');
-        state.chosenDate = moment(dataDay).format('YYYY-MM-DD');
+        state.eventStartTime = `${dataHour}:00`;
+        state.eventEndTime = moment(`${dataHour}:00`, 'HH:mm').add(15, 'minute').format('HH:mm');
+        state.eventStartDate = moment(dataDay).format('YYYY-MM-DD');
         state.modalFormVisibility = true;
       } else {
-        state.chosenStartTime = moment().format('HH:mm');;
-        state.chosenEndTime = moment().add(15, 'minute').format('HH:mm');
-        state.chosenDate = moment().format('YYYY-MM-DD');
+        state.eventStartTime = moment().format('HH:mm');;
+        state.eventEndTime = moment().add(15, 'minute').format('HH:mm');
+        state.eventStartDate = moment().format('YYYY-MM-DD');
         state.modalFormVisibility = true;
       }
     },

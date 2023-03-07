@@ -9,16 +9,16 @@ import moment from 'moment';
 
 const Modal = () => {
   const dispatch = useDispatch();
-  const chosenStartTime = useSelector(state => state.calendar.chosenStartTime);
-  const chosenEndTime = useSelector(state => state.calendar.chosenEndTime);
-  const chosenDate = useSelector(state => state.calendar.chosenDate);
+  const eventStartTime = useSelector(state => state.calendar.eventStartTime);
+  const eventEndTime = useSelector(state => state.calendar.eventEndTime);
+  const eventDate = useSelector(state => state.calendar.eventStartDate);
   const events = useSelector(state => state.events.eventsList);
 
   const [formInfo, setFormInfo] = useState({
     title: '',
-    date: chosenDate,
-    eventStart: chosenStartTime,
-    eventEnd: chosenEndTime,
+    date: eventDate,
+    eventStart: eventStartTime,
+    eventEnd: eventEndTime,
     description: '',
   });
 
