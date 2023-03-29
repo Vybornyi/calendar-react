@@ -4,7 +4,6 @@ import './event.scss';
 import PropTypes from 'prop-types';
 import { deleteEvent, showEventInfo } from '../../redux/eventsSlice.js';
 import { getHeightEvent } from '../../../src/utils/dateUtils.js';
-
 import moment from 'moment';
 
 const Event = ({ event }) => {
