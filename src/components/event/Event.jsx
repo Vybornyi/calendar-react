@@ -3,13 +3,20 @@ import { useDispatch } from 'react-redux';
 import './event.scss';
 import PropTypes from 'prop-types';
 import { deleteEvent, showEventInfo } from '../../redux/eventsSlice.js';
+import { getHeightEvent } from '../../../src/utils/dateUtils.js';
 
-const Event = ({ id, height, marginTop, title, time }) => {
+import moment from 'moment';
+
+const Event = ({ event }) => {
+  const { id, eventStart, eventEnd, title } = event;
+  const timeInfo = `${eventStart} - ${eventEnd}`;
   const dispatch = useDispatch();
+
   const eventStyle = {
-    height,
-    marginTop,
+    height: getHeightEvent(eventStart, eventEnd),
+    marginTop: moment(eventStart, 'HH:mm').format('mm'),
   };
+
   const handleDelete = () => {
     dispatch(deleteEvent(id));
   };
@@ -19,7 +26,6 @@ const Event = ({ id, height, marginTop, title, time }) => {
       <div
         onClick={e => {
           if (e.target.getAttribute('datatype') === 'event') {
-            console.log(e.target.getAttribute('datatype'));
             dispatch(showEventInfo(id));
           }
         }}
@@ -31,7 +37,7 @@ const Event = ({ id, height, marginTop, title, time }) => {
           {title}
         </div>
         <div className="event__time" datatype="event">
-          {time}
+          {timeInfo}
         </div>
         <button onClick={handleDelete} className="event__delete-btn">
           +
@@ -41,10 +47,7 @@ const Event = ({ id, height, marginTop, title, time }) => {
   );
 };
 Event.propTypes = {
-  id: PropTypes.string.isRequired,
-  height: PropTypes.number,
-  marginTop: PropTypes.number,
-  title: PropTypes.string.isRequired,
-  time: PropTypes.string.isRequired,
+  event: PropTypes.object.isRequired,
 };
+
 export default Event;

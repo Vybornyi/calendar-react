@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import moment from 'moment';
 
-const RedLine = ({ curentTime }) => {
-  const [marginTop, updateMargin] = useState(curentTime);
+const RedLine = () => {
+  const [marginTop, setMargin] = useState(moment().minutes());
   const styleLine = {
     top: marginTop,
   };
@@ -16,7 +16,7 @@ const RedLine = ({ curentTime }) => {
       block: 'center',
     });
     const intervalId = setInterval(() => {
-      updateMargin(new Date().getMinutes());
+      setMargin(moment().minutes());
     }, 1000);
     return () => {
       clearInterval(intervalId);
@@ -30,7 +30,5 @@ const RedLine = ({ curentTime }) => {
     </>
   );
 };
-RedLine.propTypes = {
-  curentTime: PropTypes.number,
-};
+
 export default RedLine;
