@@ -9,27 +9,38 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     position: relative;
-    padding: 14px;
+    padding: 24px 14px;
     display: flex;
     flex-direction: column;
     width: 25%;
   }
 
-  &__close-btn {
+  &__buttons-block {
     position: absolute;
-    right: 0px;
-    top: 0px;
-    transform: rotate(45deg) scale(2);
+    right: 3px;
+    top: 3px;
+  }
+  &__btn {
     outline: none;
     border: none;
     cursor: pointer;
-    border-radius: 50%;
+
     width: 24px;
     height: 24px;
     background: transparent;
+    :hover {
+      background-color: #9cb9ef;
+      border-radius: 10px;
+    }
   }
+  &__close-btn {
+  }
+  &__delete-btn {
+  }
+
   &__title {
     margin-bottom: 8px;
+    overflow-wrap: break-word;
   }
   &__time {
     margin-bottom: 8px;

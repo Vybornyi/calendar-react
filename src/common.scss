@@ -1,3 +1,16 @@
+h1,
+h2,
+h4,
+h4 {
+  margin: 4px;
+}
+p {
+  margin: 0;
+}
+button {
+  padding: 0;
+}
+
 .button {
   height: 40px;
   width: 130px;
@@ -58,13 +71,4 @@
 
 .hidden {
   display: none;
-}
-h1,
-h2,
-h4,
-h4 {
-  margin: 4px;
-}
-p {
-  margin: 0;
 }

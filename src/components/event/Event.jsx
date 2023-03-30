@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { deleteEvent, showEventInfo } from '../../redux/eventsSlice.js';
 import { getHeightEvent } from '../../../src/utils/dateUtils.js';
 import moment from 'moment';
+import DeleteIcon from '../../icons/DeleteIcon';
 
 const Event = ({ event }) => {
   const { id, eventStart, eventEnd, title } = event;
@@ -39,7 +40,7 @@ const Event = ({ event }) => {
           {timeInfo}
         </div>
         <button onClick={handleDelete} className="event__delete-btn">
-          +
+          <DeleteIcon className="event__delete-icon" />
         </button>
       </div>
     </>

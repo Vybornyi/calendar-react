@@ -6,6 +6,7 @@ import { closeModalForm } from '../../redux/calendarSlice.js';
 import { validateNewEvent } from '../../utils/dateUtils.js';
 import './modal.scss';
 import moment from 'moment';
+import CloseIcon from '../../icons/CloseIcon';
 
 const Modal = () => {
   const dispatch = useDispatch();
@@ -54,8 +55,9 @@ const Modal = () => {
       <div className="modal__content">
         <div className="create-event">
           <button onClick={() => dispatch(closeModalForm())} className="create-event__close-btn">
-            +
+            <CloseIcon className="create-event__close-icon" />
           </button>
+
           <form onSubmit={handleSubmit} className="event-form">
             <input
               onChange={handleChange}
